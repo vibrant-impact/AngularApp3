@@ -39,16 +39,17 @@ A standalone Angular 19 single-page application designed to discover, organize, 
 ## 🚀 Local Setup & Deployment
 
 1. **Install dependencies:**
-   ```bash
-   npm install --legacy-peer-deps
-   ```
+  ```bash
+  npm install --legacy-peer-deps
+  ```
 2. **Start the development server:**
   ```bash
   ng serve
   ```
 3. **Build for production:**
-ng build
-```
+  ```bash
+  ng build
+  ```
 
 ---
 
