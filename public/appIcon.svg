@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Deep cosmic violet background gradient -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1b0e2b" />
+      <stop offset="100%" stop-color="#3d1f5b" />
+    </linearGradient>
+
+    <!-- Neon lime & cyan accent glow gradient -->
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c6f222" />
+      <stop offset="100%" stop-color="#7dccff" />
+    </linearGradient>
+
+    <!-- Subtle inner border glow -->
+    <linearGradient id="ringGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7dccff" stop-opacity="0.75" />
+      <stop offset="100%" stop-color="#c6f222" stop-opacity="0.35" />
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded macOS / iOS Squircle Base -->
+  <rect x="16" y="16" width="480" height="480" rx="112" fill="url(#bgGradient)" stroke="url(#ringGradient)" stroke-width="10" />
+
+  <!-- Outer Vault Hexagon -->
+  <polygon points="256,68 416,160 416,352 256,444 96,352 96,160" fill="#0f0a19" fill-opacity="0.65" stroke="#7dccff" stroke-width="10" stroke-linejoin="round" />
+
+  <!-- Left Code Bracket '<' -->
+  <polyline points="182,196 128,256 182,316" fill="none" stroke="#7dccff" stroke-width="22" stroke-linecap="round" stroke-linejoin="round" />
+
+  <!-- Right Code Bracket '>' -->
+  <polyline points="330,196 384,256 330,316" fill="none" stroke="#7dccff" stroke-width="22" stroke-linecap="round" stroke-linejoin="round" />
+
+  <!-- Center Electric Lime Lightning Bolt -->
+  <polygon points="272,148 206,268 258,268 240,364 310,240 258,240" fill="url(#accentGradient)" stroke="#0f0a19" stroke-width="4" stroke-linejoin="round" />
+</svg>
