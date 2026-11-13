@@ -1,0 +1,87 @@
+<div class="detailWrapper">
+  <a routerLink="/resources" class="backLink">← Back to Vault</a>
+
+  @if (isLoading()) {
+    <div class="statusBox">Loading repository details...</div>
+  } @else {
+    @if (resource(); as item) {
+      <article class="detailCard">
+        <div class="detailTop">
+          <div>
+            <span class="categoryBadge">{{ item.category }}</span>
+            <span class="langBadge">{{ item.language }}</span>
+            <span class="starBadge">⭐ {{ item.stars | number }} stars</span>
+          </div>
+
+          <div class="topActions">
+            <button class="pinBtn" (click)="togglePin(item)">
+              {{ item.isPinned ? '★ Pinned' : '☆ Pin to Top' }}
+            </button>
+            <a [href]="item.repoUrl" target="_blank" rel="noopener" class="githubBtn">
+              Open on GitHub ↗
+            </a>
+          </div>
+        </div>
+
+        <h1 class="detailTitle">{{ item.title }}</h1>
+        <p class="detailSlug">{{ item.repoSlug }} • Maintained by {{ item.author }}</p>
+        <p class="detailDesc">{{ item.description }}</p>
+
+        <!-- Copy-Ready CLI Command Box -->
+        <div class="cliBox">
+          <div class="cliHeader">
+            <span>Quick Setup / Clone Command</span>
+            <button class="copyBtn" (click)="copyCli(item.installCommand)">
+              {{ copied() ? '✓ Copied to Clipboard' : '📋 Copy Command' }}
+            </button>
+          </div>
+          <code>{{ item.installCommand || 'git clone ' + item.repoUrl }}</code>
+        </div>
+
+        <!-- Editable Status & Personal Implementation Notes (HTTP PUT) -->
+        <div class="editSection">
+          <h3>Personal Implementation Notes & Status</h3>
+
+          <div class="formGroup">
+            <label for="statusSelect">Workflow Status</label>
+            <select
+              id="statusSelect"
+              [ngModel]="editableStatus()"
+              (ngModelChange)="editableStatus.set($event)">
+              <option value="To Explore">To Explore</option>
+              <option value="Active Toolkit">Active Toolkit</option>
+              <option value="Archived">Archived</option>
+            </select>
+          </div>
+
+          <div class="formGroup">
+            <label for="notesArea">Developer Notes, Gotchas & Env Tips</label>
+            <textarea
+              id="notesArea"
+              rows="5"
+              placeholder="Write setup reminders, API key notes, or architectural ideas..."
+              [ngModel]="editableNotes()"
+              (ngModelChange)="editableNotes.set($event)"></textarea>
+          </div>
+
+          <div class="actionRow">
+            <button class="deleteBtn" (click)="deleteAndReturn(item.id)">
+              Delete Resource
+            </button>
+
+            <div class="saveGroup">
+              @if (saveMessage()) {
+                <span class="savedFeedback">{{ saveMessage() }}</span>
+              }
+              <button class="saveBtn" (click)="saveChanges(item)">
+                Save Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+    } @else {
+      <div class="statusBox">Resource not found.</div>
+    }
+  }
+</div>

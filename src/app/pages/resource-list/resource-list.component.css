@@ -1,0 +1,499 @@
+.pinnedSection {
+  margin-bottom: 2rem;
+}
+
+.sectionHeading {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #c6f222;
+  margin-bottom: 0.85rem;
+}
+
+.pinnedGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.pinnedCard {
+  background: linear-gradient(145deg, rgba(61, 31, 91, 0.55), rgba(20, 14, 34, 0.9));
+  border: 1px solid rgba(198, 242, 34, 0.4);
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.pinnedTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.langPill {
+  font-size: 0.72rem;
+  background: rgba(125, 204, 255, 0.15);
+  color: #7dccff;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.pinnedTitle {
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.98rem;
+}
+
+.pinnedTitle:hover {
+  color: #c6f222;
+}
+
+.pinnedActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 0.4rem;
+}
+
+.copyMiniBtn {
+  background: rgba(198, 242, 34, 0.15);
+  border: 1px solid #c6f222;
+  color: #c6f222;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.extLink {
+  color: #7dccff;
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  background: #161026;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(125, 204, 255, 0.2);
+}
+
+.filterGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.searchInput,
+.selectControl {
+  background: #0d0818;
+  border: 1px solid rgba(125, 204, 255, 0.3);
+  color: #f8fafc;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.searchInput {
+  min-width: 240px;
+  flex: 1;
+}
+
+.primaryBtn {
+  background: #c6f222;
+  color: #0f0a19;
+  font-weight: 700;
+  border: none;
+  padding: 0.65rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.primaryBtn:hover {
+  transform: translateY(-1px);
+}
+
+.secondaryBtn {
+  background: transparent;
+  border: 1px solid #7dccff;
+  color: #7dccff;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.resourceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.25rem;
+}
+
+.resourceCard {
+  background: #161026;
+  border: 1px solid rgba(125, 204, 255, 0.2);
+  border-radius: 14px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.resourceCard:hover {
+  border-color: #7dccff;
+  transform: translateY(-2px);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.categoryBadge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #ffa000;
+  background: rgba(255, 160, 0, 0.14);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+}
+
+.cardMetaRight {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.starCount {
+  font-size: 0.82rem;
+  color: #cbd5e1;
+}
+
+.iconBtn {
+  background: none;
+  border: none;
+  color: #64748b;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.iconBtn.activePin {
+  color: #ffa000;
+}
+
+.cardTitle {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.1rem;
+}
+
+.cardTitle a {
+  color: #f8fafc;
+  text-decoration: none;
+}
+
+.cardTitle a:hover {
+  color: #7dccff;
+}
+
+.repoSlug {
+  margin: 0 0 0.75rem 0;
+  font-family: monospace;
+  font-size: 0.82rem;
+  color: #7dccff;
+}
+
+.cardDesc {
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  margin: 0 0 1rem 0;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.1rem;
+}
+
+.tag {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
+}
+
+.cardFooter {
+  margin-top: auto;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.statusPill {
+  font-size: 0.75rem;
+  padding: 0.22rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(125, 204, 255, 0.15);
+  color: #7dccff;
+}
+
+.statusPill[data-status="Active Toolkit"] {
+  background: rgba(198, 242, 34, 0.15);
+  color: #c6f222;
+}
+
+.cardActions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.detailBtn {
+  background: #3d1f5b;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 7px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.detailBtn:hover {
+  background: #532b7c;
+}
+
+.deleteIconBtn {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+  border-radius: 6px;
+  padding: 0.3rem 0.55rem;
+  cursor: pointer;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 3rem;
+  background: #161026;
+  border-radius: 12px;
+  color: #94a3b8;
+}
+
+/* Modal Styles */
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 3, 12, 0.82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 100;
+}
+
+.modalCard {
+  background: #19112b;
+  border: 1px solid #7dccff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 540px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.modalHeader h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #c6f222;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.autoFetchBox {
+  background: rgba(61, 31, 91, 0.45);
+  border: 1px dashed #7dccff;
+  padding: 0.9rem;
+  border-radius: 10px;
+  margin-bottom: 1.25rem;
+}
+
+.autoFetchBox label {
+  display: block;
+  font-size: 0.82rem;
+  color: #7dccff;
+  margin-bottom: 0.45rem;
+}
+
+.fetchRow {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.fetchRow input {
+  flex: 1;
+  background: #0d0818;
+  border: 1px solid rgba(125, 204, 255, 0.4);
+  color: #fff;
+  padding: 0.55rem 0.75rem;
+  border-radius: 7px;
+}
+
+.fetchBtn {
+  background: #7dccff;
+  color: #0d0818;
+  font-weight: 700;
+  border: none;
+  padding: 0 1rem;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.errorText {
+  color: #fca5a5;
+  font-size: 0.8rem;
+  margin: 0.4rem 0 0 0;
+}
+
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.formRow label {
+  font-size: 0.82rem;
+  color: #cbd5e1;
+}
+
+.formRow input,
+.formRow select,
+.formRow textarea {
+  background: #0d0818;
+  border: 1px solid rgba(125, 204, 255, 0.3);
+  color: #f8fafc;
+  padding: 0.55rem 0.75rem;
+  border-radius: 7px;
+  font-family: inherit;
+}
+
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.modeTabs {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.modeTabBtn {
+  background: #161026;
+  border: 1px solid rgba(125, 204, 255, 0.25);
+  color: #cbd5e1;
+  padding: 0.65rem 1.25rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.modeTabBtn.activeTab {
+  background: #3d1f5b;
+  border-color: #c6f222;
+  color: #c6f222;
+}
+
+.explorerForm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 100%;
+  align-items: center;
+}
+
+.dateFilterWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: #0d0818;
+  border: 1px solid rgba(125, 204, 255, 0.3);
+  padding: 0 0.6rem;
+  border-radius: 8px;
+}
+
+.dateFilterWrapper input[type="date"] {
+  border: none;
+  padding: 0.52rem 0.2rem;
+}
+
+.dateLabel {
+  font-size: 0.8rem;
+  color: #7dccff;
+  white-space: nowrap;
+}
+
+.liveResultCard {
+  border-color: rgba(198, 242, 34, 0.28);
+}
+
+.miniSaveBtn {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.82rem;
+}
+
+.savedBadge {
+  font-size: 0.82rem;
+  color: #c6f222;
+  font-weight: 600;
+}
+
+.errorState {
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}

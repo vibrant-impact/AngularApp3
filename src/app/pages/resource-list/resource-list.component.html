@@ -1,0 +1,354 @@
+<!-- Pinned Quick-Launch Bar -->
+@if (resourceService.pinnedResources().length > 0) {
+  <section class="pinnedSection">
+    <h2 class="sectionHeading">📌 Pinned Toolkit</h2>
+    <div class="pinnedGrid">
+      @for (item of resourceService.pinnedResources(); track item.id) {
+        <div class="pinnedCard">
+          <div class="pinnedTop">
+            <span class="langPill">{{ item.language }}</span>
+            <button
+              class="iconBtn activePin"
+              title="Unpin from toolbar"
+              (click)="togglePin(item)">
+              ★
+            </button>
+          </div>
+          <a [routerLink]="['/resources', item.id]" class="pinnedTitle">
+            {{ item.title }}
+          </a>
+          <div class="pinnedActions">
+            <button class="copyMiniBtn" (click)="copyCommand(item.installCommand, item.id)">
+              {{ copiedId() === item.id ? '✓ Copied!' : '📋 Copy CLI' }}
+            </button>
+            <a [href]="item.repoUrl" target="_blank" rel="noopener" class="extLink">
+              GitHub ↗
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+}
+
+<!-- Mode Switcher Tabs: Saved Vault vs. Live GitHub Search -->
+<div class="modeTabs">
+  <button
+    class="modeTabBtn"
+    [class.activeTab]="searchMode() === 'vault'"
+    (click)="searchMode.set('vault')">
+    🗄️ My Saved Vault ({{ resourceService.resources().length }})
+  </button>
+  <button
+    class="modeTabBtn"
+    [class.activeTab]="searchMode() === 'github'"
+    (click)="searchMode.set('github')">
+    🌐 Explore All of GitHub
+  </button>
+</div>
+
+<!-- MODE 1: MY SAVED VAULT -->
+@if (searchMode() === 'vault') {
+  <section class="toolbar">
+    <div class="filterGroup">
+      <input
+        type="text"
+        class="searchInput"
+        placeholder="Filter saved repos by title, owner/repo, or tags..."
+        [ngModel]="resourceService.searchQuery()"
+        (ngModelChange)="resourceService.searchQuery.set($event)"
+      />
+
+      <select
+        class="selectControl"
+        [ngModel]="resourceService.selectedCategory()"
+        (ngModelChange)="resourceService.selectedCategory.set($event)">
+        <option value="All">All Categories</option>
+        <option value="Starter Templates">Starter Templates</option>
+        <option value="AI & Agents">AI & Agents</option>
+        <option value="UI & Design Systems">UI & Design Systems</option>
+        <option value="Dev Utilities">Dev Utilities</option>
+      </select>
+
+      <select
+        class="selectControl"
+        [ngModel]="resourceService.selectedStatus()"
+        (ngModelChange)="resourceService.selectedStatus.set($event)">
+        <option value="All">All Statuses</option>
+        <option value="Active Toolkit">Active Toolkit</option>
+        <option value="To Explore">To Explore</option>
+        <option value="Archived">Archived</option>
+      </select>
+    </div>
+
+    <button class="primaryBtn" (click)="openAddModal()">
+      + Add Manually / Slug
+    </button>
+  </section>
+
+  @if (isLoading()) {
+    <div class="emptyState">Loading developer vault...</div>
+  } @else if (resourceService.filteredResources().length === 0) {
+    <div class="emptyState">
+      <p>No saved resources match your active filters.</p>
+      <button class="secondaryBtn" (click)="resetFilters()">Reset Filters</button>
+    </div>
+  } @else {
+    <div class="resourceGrid">
+      @for (resource of resourceService.filteredResources(); track resource.id) {
+        <article class="resourceCard">
+          <div class="cardHeader">
+            <span class="categoryBadge">{{ resource.category }}</span>
+            <div class="cardMetaRight">
+              <span class="starCount">⭐ {{ resource.stars | number }}</span>
+              <button
+                class="iconBtn"
+                [class.activePin]="resource.isPinned"
+                title="Toggle Pin"
+                (click)="togglePin(resource)">
+                {{ resource.isPinned ? '★' : '☆' }}
+              </button>
+            </div>
+          </div>
+
+          <h3 class="cardTitle">
+            <a [routerLink]="['/resources', resource.id]">{{ resource.title }}</a>
+          </h3>
+          <p class="repoSlug">{{ resource.repoSlug }}</p>
+          <p class="cardDesc">{{ resource.description }}</p>
+
+          <div class="tagList">
+            @for (tag of resource.tags; track tag) {
+              <span class="tag">#{{ tag }}</span>
+            }
+          </div>
+
+          <div class="cardFooter">
+            <span class="statusPill" [attr.data-status]="resource.status">
+              {{ resource.status }}
+            </span>
+            <div class="cardActions">
+              <a [routerLink]="['/resources', resource.id]" class="detailBtn">
+                Inspect / Notes
+              </a>
+              <button
+                class="deleteIconBtn"
+                title="Remove resource"
+                (click)="deleteResource(resource.id)">
+                ✕
+              </button>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+  }
+}
+
+<!-- MODE 2: LIVE GITHUB EXPLORER -->
+@if (searchMode() === 'github') {
+  <section class="toolbar githubExplorerBar">
+    <form (ngSubmit)="runLiveGithubSearch()" class="explorerForm">
+      <div class="filterGroup">
+        <input
+          type="text"
+          class="searchInput"
+          name="githubQuery"
+          placeholder="Search developer or topic..."
+          [ngModel]="githubQuery()"
+          (ngModelChange)="githubQuery.set($event)"
+        />
+
+        <select
+          class="selectControl"
+          name="githubLanguage"
+          [ngModel]="githubLanguage()"
+          (ngModelChange)="githubLanguage.set($event)">
+          <option value="All">Any Language</option>
+          <option value="TypeScript">TypeScript</option>
+          <option value="JavaScript">JavaScript</option>
+          <option value="Swift">Swift</option>
+          <option value="Kotlin">Kotlin</option>
+          <option value="Java">Java</option>
+          <option value="Python">Python</option>
+          <option value="PHP">PHP</option>
+        </select>
+
+        <div class="dateFilterWrapper" title="Updated after date">
+          <span class="dateLabel">Updated After:</span>
+          <input
+            type="date"
+            class="selectControl"
+            name="githubUpdatedAfter"
+            [ngModel]="githubUpdatedAfter()"
+            (ngModelChange)="githubUpdatedAfter.set($event)"
+          />
+        </div>
+
+        <select
+          class="selectControl"
+          name="githubSortBy"
+          [ngModel]="githubSortBy()"
+          (ngModelChange)="githubSortBy.set($event)">
+          <option value="stars">Sort: Top Stars</option>
+          <option value="updated">Sort: Recently Updated</option>
+          <option value="best-match">Sort: Best Match</option>
+        </select>
+      </div>
+
+      <button type="submit" class="primaryBtn" [disabled]="isSearchingGithub()">
+        {{ isSearchingGithub() ? 'Searching GitHub...' : '🔍 Search GitHub' }}
+      </button>
+    </form>
+  </section>
+
+  @if (githubSearchError()) {
+    <div class="emptyState errorState">{{ githubSearchError() }}</div>
+  } @else if (isSearchingGithub()) {
+    <div class="emptyState">Querying GitHub repositories...</div>
+  } @else if (resourceService.liveGithubResults().length === 0) {
+    <div class="emptyState">
+      <p>Enter a developer's name (like <strong>Kadeem Cherman</strong>), a topic, or choose a language above to search public GitHub repositories.</p>
+    </div>
+  } @else {
+    <div class="resourceGrid">
+      @for (repo of resourceService.liveGithubResults(); track repo.id) {
+        <article class="resourceCard liveResultCard">
+          <div class="cardHeader">
+            <span class="langPill">{{ repo.language || 'Code' }}</span>
+            <span class="starCount">⭐ {{ repo.stargazers_count | number }}</span>
+          </div>
+
+          <h3 class="cardTitle">
+            <a [href]="repo.html_url" target="_blank" rel="noopener">{{ repo.name }}</a>
+          </h3>
+          <p class="repoSlug">
+            {{ repo.full_name }} • Updated {{ repo.updated_at | date:'mediumDate' }}
+          </p>
+          <p class="cardDesc">{{ repo.description || 'No description provided on GitHub.' }}</p>
+
+          <div class="tagList">
+            @for (topic of (repo.topics || []).slice(0, 4); track topic) {
+              <span class="tag">#{{ topic }}</span>
+            }
+          </div>
+
+          <div class="cardFooter">
+            <a [href]="repo.html_url" target="_blank" rel="noopener" class="extLink">
+              View on GitHub ↗
+            </a>
+
+            @if (isAlreadySaved(repo.full_name)) {
+              <span class="savedBadge">✓ In Your Vault</span>
+            } @else {
+              <button class="primaryBtn miniSaveBtn" (click)="importGithubResultToVault(repo)">
+                + Save to Vault
+              </button>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  }
+}
+
+<!-- Manual / Quick Slug Modal (kept from before) -->
+@if (showAddModal()) {
+  <div class="modalBackdrop" (click)="closeAddModal()">
+    <div class="modalCard" (click)="$event.stopPropagation()">
+      <div class="modalHeader">
+        <h2>Add GitHub Repository</h2>
+        <button class="closeBtn" (click)="closeAddModal()">✕</button>
+      </div>
+
+      <div class="autoFetchBox">
+        <label>Quick Import from GitHub (<code>owner/repo</code> or full URL)</label>
+        <div class="fetchRow">
+          <input
+            type="text"
+            [(ngModel)]="slugInput"
+            placeholder="e.g., vercel/ai or angular/angular"
+          />
+          <button
+            type="button"
+            class="fetchBtn"
+            [disabled]="isFetchingGithub()"
+            (click)="autoFillFromGithub()">
+            {{ isFetchingGithub() ? 'Fetching...' : '⚡ Auto-Fill' }}
+          </button>
+        </div>
+        @if (fetchError()) {
+          <p class="errorText">{{ fetchError() }}</p>
+        }
+      </div>
+
+      <form (ngSubmit)="submitNewResource()" class="modalForm">
+        <div class="formRow">
+          <label>Display Title *</label>
+          <input type="text" [(ngModel)]="formState.title" name="title" required />
+        </div>
+
+        <div class="twoCol">
+          <div class="formRow">
+            <label>Author / Org *</label>
+            <input type="text" [(ngModel)]="formState.author" name="author" required />
+          </div>
+          <div class="formRow">
+            <label>Primary Language</label>
+            <input type="text" [(ngModel)]="formState.language" name="language" />
+          </div>
+        </div>
+
+        <div class="twoCol">
+          <div class="formRow">
+            <label>Category</label>
+            <select [(ngModel)]="formState.category" name="category">
+              <option value="Starter Templates">Starter Templates</option>
+              <option value="AI & Agents">AI & Agents</option>
+              <option value="UI & Design Systems">UI & Design Systems</option>
+              <option value="Dev Utilities">Dev Utilities</option>
+            </select>
+          </div>
+          <div class="formRow">
+            <label>Workflow Status</label>
+            <select [(ngModel)]="formState.status" name="status">
+              <option value="To Explore">To Explore</option>
+              <option value="Active Toolkit">Active Toolkit</option>
+              <option value="Archived">Archived</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="formRow">
+          <label>CLI / Install Command</label>
+          <input
+            type="text"
+            [(ngModel)]="formState.installCommand"
+            name="installCommand"
+            placeholder="git clone https://github.com/..."
+          />
+        </div>
+
+        <div class="formRow">
+          <label>Description</label>
+          <textarea [(ngModel)]="formState.description" name="description" rows="2"></textarea>
+        </div>
+
+        <div class="formRow">
+          <label>Tags (comma-separated)</label>
+          <input
+            type="text"
+            [(ngModel)]="tagsInput"
+            name="tagsInput"
+            placeholder="Angular, Signals, AI"
+          />
+        </div>
+
+        <div class="modalFooter">
+          <button type="button" class="secondaryBtn" (click)="closeAddModal()">Cancel</button>
+          <button type="submit" class="primaryBtn">Save to Vault</button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
